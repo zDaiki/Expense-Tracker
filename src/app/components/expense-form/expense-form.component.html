@@ -1,0 +1,75 @@
+<div class="expense-form-container">
+  <h1>{{ isEditMode ? 'Edit Expense' : 'Add New Expense' }}</h1>
+  
+  <form [formGroup]="expenseForm" (ngSubmit)="onSubmit()" class="expense-form">
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input 
+        type="text" 
+        id="description" 
+        formControlName="description" 
+        placeholder="Enter expense description"
+      >
+      <div *ngIf="expenseForm.get('description')?.invalid && expenseForm.get('description')?.touched" class="error-message">
+        <span *ngIf="expenseForm.get('description')?.errors?.['required']">Description is required</span>
+        <span *ngIf="expenseForm.get('description')?.errors?.['minlength']">Description must be at least 3 characters</span>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="amount">Amount</label>
+      <input 
+        type="number" 
+        id="amount" 
+        formControlName="amount" 
+        placeholder="Enter expense amount"
+        step="0.01"
+        min="0.01"
+      >
+      <div *ngIf="expenseForm.get('amount')?.invalid && expenseForm.get('amount')?.touched" class="error-message">
+        <span *ngIf="expenseForm.get('amount')?.errors?.['required']">Amount is required</span>
+        <span *ngIf="expenseForm.get('amount')?.errors?.['min']">Amount must be greater than 0</span>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="date">Date</label>
+      <input 
+        type="date" 
+        id="date" 
+        formControlName="date"
+      >
+      <div *ngIf="expenseForm.get('date')?.invalid && expenseForm.get('date')?.touched" class="error-message">
+        <span *ngIf="expenseForm.get('date')?.errors?.['required']">Date is required</span>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="category">Category</label>
+      <select id="category" formControlName="category" class="form-control">
+        <option value="">Select a category</option>
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+      </select>
+      <div *ngIf="expenseForm.get('category')?.invalid && expenseForm.get('category')?.touched" class="error-message">
+        Category is required
+      </div>
+    </div>
+    
+    <!-- Option to add a custom category -->
+    <div class="form-group" *ngIf="expenseForm.get('category')?.value === 'Other'">
+      <label for="customCategory">Custom Category</label>
+      <input 
+        type="text" 
+        id="customCategory" 
+        formControlName="customCategory" 
+        class="form-control"
+        placeholder="Enter a custom category"
+      >
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn-save">{{ isEditMode ? 'Update' : 'Save' }}</button>
+      <a routerLink="/expenses" class="btn-cancel">Cancel</a>
+    </div>
+  </form>
+</div>

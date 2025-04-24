@@ -1,0 +1,28 @@
+<div class="expense-detail-container" *ngIf="expense">
+  <h1>Expense Details</h1>
+
+  <div class="expense-card">
+    <div class="expense-header">
+      <h2>{{ expense.description }}</h2>
+      <span class="amount">Rs. {{ expense.amount | number:'1.2-2' }}</span>
+    </div>
+
+    <div class="expense-info">
+      <div class="info-item">
+        <span class="label">Category:</span>
+        <span class="value">{{ expense.category }}</span>
+      </div>
+
+      <div class="info-item">
+        <span class="label">Date:</span>
+        <span class="value">{{ expense.date | date:'mediumDate' }}</span>
+      </div>
+    </div>
+
+    <div class="expense-actions">
+      <a [routerLink]="['/expenses', expense.id, 'edit']" class="btn-edit">Edit</a>
+      <button (click)="deleteExpense()" class="btn-delete">Delete</button>
+      <a routerLink="/expenses" class="btn-back">Back to List</a>
+    </div>
+  </div>
+</div>

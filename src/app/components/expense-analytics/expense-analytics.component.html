@@ -1,0 +1,30 @@
+<div class="analytics-container">
+  <h1>Expense Analytics</h1>
+  
+  <div class="chart-section">
+    <div class="chart-card">
+      <h2>Expenses by Category</h2>
+      <div class="chart-container">
+        <canvas #pieChartCanvas></canvas>
+      </div>
+    </div>
+    
+    <div class="chart-card">
+      <h2>Monthly Expenses</h2>
+      <div class="chart-container">
+        <canvas #barChartCanvas></canvas>
+      </div>
+    </div>
+    
+    <div class="chart-card full-width">
+      <h2>Expense Trend</h2>
+      <div class="chart-container">
+        <canvas #lineChartCanvas></canvas>
+      </div>
+    </div>
+  </div>
+  
+  <div class="actions">
+    <a routerLink="/dashboard" class="btn-back">Back to Dashboard</a>
+  </div>
+</div>

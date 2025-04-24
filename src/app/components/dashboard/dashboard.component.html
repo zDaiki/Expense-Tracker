@@ -1,0 +1,80 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Dashboard</h1>
+    <a routerLink="/expenses/new" class="btn-add">Add New Expense</a>
+  </div>
+
+  <div class="dashboard-summary">
+    <div class="summary-card">
+      <h2>Total Expenses</h2>
+      <p class="amount">Rs. {{ totalAmount | number:'1.2-2' }}</p>
+    </div>
+
+    <div class="summary-card">
+      <h2>Recent Expenses</h2>
+      <p class="count">{{ recentExpenses.length }}</p>
+    </div>
+
+    <div class="summary-card">
+      <h2>Categories</h2>
+      <p class="count">{{ categories.length }}</p>
+    </div>
+  </div>
+
+  <!-- Analytics Section -->
+  <div class="analytics-section">
+    <h2>Expense Analytics</h2>
+
+    <div class="analytics-cards">
+      <div class="analytics-card">
+        <h3>Expenses by Category</h3>
+        <div class="category-breakdown">
+          <div *ngFor="let category of categoryBreakdown | keyvalue" class="category-item">
+            <div class="category-info">
+              <span class="category-name">{{ category.key }}</span>
+              <span class="category-amount">Rs. {{ category.value | number:'1.2-2' }}</span>
+            </div>
+            <div class="category-bar">
+              <div class="category-fill" [style.width.%]="getCategoryPercentage(category.value)"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="analytics-card">
+        <h3>Monthly Trend</h3>
+        <div class="monthly-trend">
+          <div *ngFor="let month of monthlyExpenses | keyvalue" class="month-item">
+            <span class="month-name">{{ month.key }}</span>
+            <div class="month-bar">
+              <div class="month-fill" [style.width.%]="getMonthPercentage(month.value)"></div>
+            </div>
+            <span class="month-amount">Rs. {{ month.value | number:'1.2-2' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recent-expenses">
+    <div class="section-header">
+      <h2>Recent Expenses</h2>
+      <a routerLink="/expenses" class="view-all">View All</a>
+    </div>
+
+    <div class="expense-list">
+      <div *ngIf="recentExpenses.length === 0" class="no-expenses">
+        <p>No expenses found. Add your first expense to get started!</p>
+      </div>
+
+      <div *ngFor="let expense of recentExpenses" class="expense-item">
+        <div class="expense-details">
+          <h3>{{ expense.description }}</h3>
+          <p class="expense-category">{{ expense.category }}</p>
+          <p class="expense-date">{{ expense.date | date }}</p>
+        </div>
+        <p class="expense-amount">Rs. {{ expense.amount | number:'1.2-2' }}</p>
+      </div>
+    </div>
+  </div>
+</div>
