@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ExpenseService } from '../../services/expense.service';
 import { Expense } from '../../models/expense.model';
+import { NgIf, NgFor, DatePipe, DecimalPipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { DatePipe, DecimalPipe, NgFor, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-expense-list',
   templateUrl: './expense-list.component.html',
   styleUrls: ['./expense-list.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, RouterLink, DatePipe, DecimalPipe]
+  imports: [NgIf, NgFor, RouterLink, DecimalPipe, DatePipe]
 })
 export class ExpenseListComponent implements OnInit {
   expenses: Expense[] = [];

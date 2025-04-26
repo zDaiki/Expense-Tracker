@@ -7,6 +7,9 @@
 .app-header,
 .auth-header {
   background-color: #2c3e50;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   color: white;
   padding: 1rem 2rem;
   display: flex;
@@ -19,9 +22,54 @@
   justify-content: space-between;
 }
 
-.logo h1 {
-  margin: 0;
-  font-size: 1.5rem;
+.logo {
+  display: flex;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 15px;
+    padding: 5px;
+
+    .menu-icon {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 25px;
+      height: 20px;
+
+      span {
+        display: block;
+        height: 3px;
+        width: 100%;
+        background-color: white;
+        border-radius: 3px;
+        transition: all 0.3s ease;
+      }
+
+      &.open {
+        span:nth-child(1) {
+          transform: translateY(8.5px) rotate(45deg);
+        }
+
+        span:nth-child(2) {
+          opacity: 0;
+        }
+
+        span:nth-child(3) {
+          transform: translateY(-8.5px) rotate(-45deg);
+        }
+      }
+    }
+  }
 }
 
 .main-nav,
@@ -108,7 +156,51 @@
 }
 
 @media (max-width: 768px) {
-  .app-header,
+  .app-header {
+    flex-direction: column;
+    padding: 1rem;
+    align-items: stretch;
+
+    .logo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+
+      .menu-toggle {
+        display: block;
+      }
+    }
+
+    .main-nav {
+      flex-direction: column;
+      gap: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+
+      &.open {
+        max-height: 300px;
+      }
+
+      a {
+        padding: 12px 0;
+        border-radius: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+
+    .user-menu {
+      width: 100%;
+      justify-content: space-between;
+      margin-top: 1rem;
+    }
+  }
+
   .auth-header {
     flex-direction: column;
     padding: 1rem;
@@ -117,16 +209,10 @@
       margin-bottom: 1rem;
     }
 
-    .main-nav,
     .auth-nav {
       width: 100%;
       justify-content: center;
-      margin-bottom: 1rem;
-    }
-
-    .user-menu {
-      width: 100%;
-      justify-content: center;
+      gap: 10px;
     }
   }
 }

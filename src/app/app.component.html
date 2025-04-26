@@ -2,8 +2,15 @@
   <header class="app-header" *ngIf="isAuthenticated">
     <div class="logo">
       <h1>Expense Tracker</h1>
+      <button class="menu-toggle" (click)="toggleMenu()">
+        <span class="menu-icon" [class.open]="isMenuOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
     </div>
-    <nav class="main-nav">
+    <nav class="main-nav" [class.open]="isMenuOpen">
       <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
       <a routerLink="/expenses" routerLinkActive="active">Expenses</a>
       <a routerLink="/data-management" routerLinkActive="active">Data</a>

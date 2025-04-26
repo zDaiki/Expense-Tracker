@@ -52,93 +52,140 @@ import { Expense } from '../../models/expense.model';
   `,
   styles: [`
     .data-management-container {
-      max-width: 800px;
+      max-width: 700px;
       margin: 0 auto;
-      padding: 20px;
-      
-      h1 {
-        text-align: center;
-        margin-bottom: 30px;
-      }
-      
-      .card {
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        margin-bottom: 20px;
-        
-        h2 {
-          margin-top: 0;
-          margin-bottom: 15px;
-          color: #333;
-        }
-        
-        p {
-          margin-bottom: 20px;
-          color: #666;
-        }
-        
-        .warning {
-          color: #e74c3c;
-          font-weight: 500;
-        }
-      }
-      
+      padding: 2rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+  
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+  
+    .card {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease-in-out;
+    }
+  
+    .card:hover {
+      transform: scale(1.01);
+    }
+  
+    h2 {
+      font-size: 1.4rem;
+      margin-bottom: 0.75rem;
+      color: #2c3e50;
+    }
+  
+    p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+  
+    .warning {
+      color: #e74c3c;
+      font-weight: bold;
+      background-color: #fdecea;
+      padding: 0.75rem;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+  
+    .file-input-container {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+  
+    .file-input {
+      display: none;
+    }
+  
+    .file-label {
+      background-color: #3498db;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+  
+    .file-label:hover {
+      background-color: #2980b9;
+    }
+  
+    .file-name {
+      font-style: italic;
+      color: #666;
+    }
+  
+    .btn-primary {
+      background-color: #2ecc71;
+      color: #fff;
+      padding: 0.75rem 1.25rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+  
+    .btn-primary:hover {
+      background-color: #27ae60;
+    }
+  
+    .btn-primary:disabled {
+      background-color: #bdc3c7;
+      cursor: not-allowed;
+    }
+  
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+  
+    .btn-back {
+      background-color: #34495e;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+  
+    .btn-back:hover {
+      background-color: #2c3e50;
+    }
+  
+    @media (max-width: 600px) {
       .file-input-container {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-        
-        .file-input {
-          position: absolute;
-          width: 0.1px;
-          height: 0.1px;
-          opacity: 0;
-          overflow: hidden;
-          z-index: -1;
-        }
-        
-        .file-label {
-          background-color: #3498db;
-          color: white;
-          padding: 10px 15px;
-          border-radius: 4px;
-          cursor: pointer;
-          font-weight: 600;
-          
-          &:hover {
-            background-color: #2980b9;
-          }
-        }
-        
-        .file-name {
-          margin-left: 15px;
-          color: #666;
-        }
+        flex-direction: column;
+        align-items: flex-start;
       }
-      
-      .actions {
-        display: flex;
-        justify-content: center;
-        margin-top: 30px;
-        
-        .btn-back {
-          display: inline-block;
-          padding: 12px 24px;
-          background-color: #3498db;
-          color: white;
-          border-radius: 4px;
-          text-decoration: none;
-          font-weight: 600;
-          
-          &:hover {
-            background-color: #2980b9;
-          }
-        }
+  
+      .file-label,
+      .file-name {
+        width: 100%;
+      }
+  
+      .file-name {
+        margin-top: 0.5rem;
       }
     }
   `]
+  
 })
 export class DataManagementComponent {
   selectedFile: File | null = null;

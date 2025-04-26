@@ -11,8 +11,8 @@
     </div>
 
     <div class="summary-card">
-      <h2>Recent Expenses</h2>
-      <p class="count">{{ recentExpenses.length }}</p>
+      <h2>Number of Expenses</h2>
+      <p class="count">{{ allExpenses.length }}</p>
     </div>
 
     <div class="summary-card">
@@ -25,6 +25,30 @@
   <div class="analytics-section">
     <h2>Expense Analytics</h2>
 
+    <div class="chart-section">
+      <div class="chart-card">
+        <h3>Expenses by Category</h3>
+        <div class="chart-container">
+          <canvas #pieChartCanvas></canvas>
+        </div>
+      </div>
+      
+      <div class="chart-card">
+        <h3>Monthly Expenses</h3>
+        <div class="chart-container">
+          <canvas #barChartCanvas></canvas>
+        </div>
+      </div>
+      
+      <div class="chart-card full-width">
+        <h3>Expense Trend</h3>
+        <div class="chart-container ex-trend">
+          <canvas #lineChartCanvas></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Category breakdown can remain if you want -->
     <div class="analytics-cards">
       <div class="analytics-card">
         <h3>Expenses by Category</h3>
