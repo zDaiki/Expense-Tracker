@@ -1,24 +1,42 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { AuthService } from './services/auth.service';
 import { User } from './models/user.model';
+import { ProfileModalComponent } from './components/profile-modal/profile-modal.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive]
+  imports: [
+    CommonModule, 
+    RouterOutlet, 
+    RouterLink, 
+    RouterLinkActive, 
+    MatMenuModule, 
+    MatIconModule, 
+    MatButtonModule, 
+    MatDividerModule,
+    MatDialogModule
+  ]
 })
 export class AppComponent implements OnInit {
   title = 'Expense Tracker';
   isAuthenticated = false;
   currentUser: User | null = null;
   isMenuOpen = false;
-  router: any;
   
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private dialog: MatDialog
+  ) {}
   
   ngOnInit(): void {
     this.authService.getCurrentUser().subscribe(user => {
@@ -31,26 +49,23 @@ export class AppComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
   
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any): void {
-    // Close menu automatically when screen size increases
-    if (window.innerWidth > 768 && this.isMenuOpen) {
-      this.isMenuOpen = false;
-    }
-  }
-  
-  // Close menu when clicking on a link (for mobile)
-  closeMenu(): void {
-    if (window.innerWidth <= 768) {
-      this.isMenuOpen = false;
-    }
+  openProfileModal(): void {
+    if (!this.currentUser) return;
+    
+    const dialogRef = this.dialog.open(ProfileModalComponent, {
+      width: '500px',
+      data: { user: this.currentUser }
+    });
+    
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // User profile was updated
+        console.log('Profile updated:', result);
+      }
+    });
   }
   
   logout(): void {
     this.authService.logout();
-    this.currentUser = null;
-    this.isAuthenticated = false;
-    this.router.navigate(['/login']);
   }
-  
 }

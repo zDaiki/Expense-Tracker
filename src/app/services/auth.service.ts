@@ -144,8 +144,30 @@ export class AuthService {
   }
   
   private generateToken(): string {
-    // In a real app, you would use a proper JWT library
-    // This is just a simple mock implementation
     return Math.random().toString(36).substring(2) + Date.now().toString(36);
+  }
+
+  updateUserProfile(user: User): Observable<User> {
+    // Find and update the user in the users array
+    const index = this.users.findIndex(u => u.id === user.id);
+    if (index !== -1) {
+      // Preserve the password from the existing user
+      const password = this.users[index].password;
+      this.users[index] = { ...user, password };
+      this.saveUsers();
+    }
+    
+    // Update the current user in localStorage and in the BehaviorSubject
+    const authData = {
+      user: user,
+      token: this.generateToken()
+    };
+    
+    if (this.isBrowser) {
+      localStorage.setItem(this.AUTH_STORAGE_KEY, JSON.stringify(authData));
+    }
+    
+    this.currentUserSubject.next(user);
+    return of(user);
   }
 }

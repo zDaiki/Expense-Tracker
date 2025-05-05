@@ -16,8 +16,37 @@
       <a routerLink="/data-management" routerLinkActive="active">Data</a>
     </nav>
     <div class="user-menu">
-      <span class="username" *ngIf="currentUser">{{ currentUser.username }}</span>
-      <button class="btn-logout" (click)="logout()">Logout</button>
+      <button mat-button [matMenuTriggerFor]="userMenu" class="user-menu-button">
+        <mat-icon class="user-icon">account_circle</mat-icon>
+        <span *ngIf="currentUser" class="username">{{ currentUser.username }}</span>
+        <!-- <mat-icon>arrow_drop_down</mat-icon> -->
+      </button>
+
+      <mat-menu #userMenu="matMenu" class="user-dropdown">
+        <div class="menu-header">
+          <div class="user-avatar">
+            <mat-icon>account_circle</mat-icon>
+          </div>
+          <div class="user-info" *ngIf="currentUser">
+            <h3>{{ currentUser.username }}</h3>
+            <p *ngIf="currentUser.email">{{ currentUser.email }}</p>
+          </div>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <button mat-menu-item (click)="openProfileModal()">
+          <mat-icon>person</mat-icon>
+          <span>View Profile</span>
+        </button>
+        
+        <mat-divider></mat-divider>
+        
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Logout</span>
+        </button>
+      </mat-menu>
     </div>
   </header>
   
@@ -34,8 +63,4 @@
   <main class="app-content">
     <router-outlet></router-outlet>
   </main>
-  
-  <!-- <footer class="app-footer">
-    <p>&copy; 2023 Expense Tracker App</p>
-  </footer>
-</div> -->
+</div>

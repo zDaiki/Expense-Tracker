@@ -40,11 +40,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let expense of filteredExpenses">
+        <tr *ngFor="let expense of paginatedExpenses">
           <td>{{ expense.date | date }}</td>
           <td>{{ expense.description }}</td>
           <td>{{ expense.category }}</td>
-          <td>Rs. {{ expense.amount | number:'1.2-2' }}</td>
+          <td>Rs. {{ expense.amount }}</td>
           <td class="actions">
             <a [routerLink]="['/expenses', expense.id]" class="btn-view">View</a>
             <a [routerLink]="['/expenses', expense.id, 'edit']" class="btn-edit">Edit</a>
@@ -53,5 +53,40 @@
         </tr>
       </tbody>
     </table>
+    
+    <!-- Pagination Controls -->
+    <div class="pagination" *ngIf="totalPages > 1">
+      <button 
+        class="pagination-btn" 
+        [disabled]="currentPage === 1"
+        (click)="goToPage(currentPage - 1)"
+      >
+        &laquo;
+      </button>
+      
+      <button 
+        *ngFor="let page of pages" 
+        class="pagination-btn" 
+        [class.active]="page === currentPage"
+        [class.ellipsis]="page === -1"
+        [disabled]="page === -1"
+        (click)="page !== -1 && goToPage(page)"
+      >
+        {{ page === -1 ? '...' : page }}
+      </button>
+      
+      <button 
+        class="pagination-btn" 
+        [disabled]="currentPage === totalPages"
+        (click)="goToPage(currentPage + 1)"
+      >
+        &raquo;
+      </button>
+    </div>
+    
+    <!-- Pagination Info -->
+    <div class="pagination-info" *ngIf="filteredExpenses.length > 0">
+      Showing {{ (currentPage - 1) * pageSize + 1 }} to {{ Math.min(currentPage * pageSize, filteredExpenses.length) }} of {{ filteredExpenses.length }} expenses
+    </div>
   </div>
 </div>

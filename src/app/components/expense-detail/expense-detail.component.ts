@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ExpenseService } from '../../services/expense.service';
 import { Expense } from '../../models/expense.model';
-import {  DatePipe, NgIf, DecimalPipe } from '@angular/common';
+import {  DatePipe, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-expense-detail',
   templateUrl: './expense-detail.component.html',
   styleUrls: ['./expense-detail.component.scss'],
   standalone: true,
-  imports: [NgIf, RouterLink, DatePipe, DecimalPipe]
+  imports: [NgIf, RouterLink, DatePipe]
 })
 export class ExpenseDetailComponent implements OnInit {
   expense: Expense | undefined;

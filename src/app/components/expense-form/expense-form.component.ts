@@ -80,7 +80,7 @@ export class ExpenseFormComponent implements OnInit {
 
   onSubmit(): void {
     if (this.expenseForm.invalid) {
-      return;
+      return this.markFormGroupTouched(this.expenseForm);
     }
     
     const formValue = this.expenseForm.value;

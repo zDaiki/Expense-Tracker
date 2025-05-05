@@ -166,7 +166,6 @@ export class ExpenseService {
     'Utilities',
     'Travel',
     'Personal Care',
-    'Gifts & Donations',
     'Investments',
     'Other'
   ];

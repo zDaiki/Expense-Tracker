@@ -1,0 +1,40 @@
+<div class="data-management-container">
+    <h1>Data Management</h1>
+    
+    <div class="card">
+      <h2>Export Data</h2>
+      <p>Download your expense data as a JSON file for backup or transfer to another device.</p>
+      <button class="btn-primary" (click)="exportData()">Export Data</button>
+    </div>
+    
+    <div class="card">
+      <h2>Import Data</h2>
+      <p>Import expense data from a previously exported JSON file.</p>
+      <p class="warning">Warning: This will replace your current data. Make sure to export your current data first if you want to keep it.</p>
+      
+      <div class="file-input-container">
+        <input 
+          type="file" 
+          id="fileInput" 
+          accept=".json" 
+          (change)="handleFileInput($event)"
+          #fileInput
+          class="file-input"
+        >
+        <label for="fileInput" class="file-label">Choose File</label>
+        <span class="file-name">{{ fileName || 'No file chosen' }}</span>
+      </div>
+      
+      <button 
+        class="btn-primary" 
+        [disabled]="!selectedFile" 
+        (click)="importData()"
+      >
+        Import Data
+      </button>
+    </div>
+    
+    <!-- <div class="actions">
+      <a routerLink="/dashboard" class="btn-back">Back to Dashboard</a>
+    </div> -->
+  </div>

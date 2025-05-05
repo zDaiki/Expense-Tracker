@@ -1,0 +1,67 @@
+<div class="profile-modal">
+  <div class="modal-header">
+    <h2>{{ isEditing ? 'Edit Profile' : 'Profile Details' }}</h2>
+    <button mat-icon-button (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div class="modal-content">
+    <div class="profile-avatar">
+      <mat-icon>account_circle</mat-icon>
+    </div>
+    
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input matInput formControlName="username">
+          <mat-error *ngIf="profileForm.get('username')?.hasError('required')">
+            Username is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          <mat-error *ngIf="profileForm.get('email')?.hasError('required')">
+            Email is required
+          </mat-error>
+          <mat-error *ngIf="profileForm.get('email')?.hasError('email')">
+            Please enter a valid email address
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="form-actions">
+        <button 
+          type="button" 
+          mat-button 
+          color="primary" 
+          (click)="onCancel()">
+          {{ isEditing ? 'Cancel' : 'Close' }}
+        </button>
+        
+        <button 
+          *ngIf="!isEditing" 
+          type="button" 
+          mat-raised-button 
+          color="primary" 
+          (click)="toggleEdit()">
+          Edit Profile
+        </button>
+        
+        <button 
+          *ngIf="isEditing" 
+          type="submit" 
+          mat-raised-button 
+          color="primary" 
+          [disabled]="profileForm.invalid">
+          Save Changes
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

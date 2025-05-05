@@ -65,6 +65,9 @@
         class="form-control"
         placeholder="Enter a custom category"
       >
+      <div *ngIf="expenseForm.get('customCategory')?.invalid && expenseForm.get('customCategory')?.touched" class="error-message">
+        <span *ngIf="expenseForm.get('customCategory')?.errors?.['required']">Custom category is required</span>
+      </div>
     </div>
     
     <div class="form-actions">

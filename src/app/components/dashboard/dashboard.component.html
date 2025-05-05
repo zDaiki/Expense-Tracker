@@ -7,7 +7,7 @@
   <div class="dashboard-summary">
     <div class="summary-card">
       <h2>Total Expenses</h2>
-      <p class="amount">Rs. {{ totalAmount | number:'1.2-2' }}</p>
+      <p class="amount">Rs. {{ totalAmount }}</p>
     </div>
 
     <div class="summary-card">
@@ -56,7 +56,7 @@
           <div *ngFor="let category of categoryBreakdown | keyvalue" class="category-item">
             <div class="category-info">
               <span class="category-name">{{ category.key }}</span>
-              <span class="category-amount">Rs. {{ category.value | number:'1.2-2' }}</span>
+              <span class="category-amount">Rs. {{ category.value }}</span>
             </div>
             <div class="category-bar">
               <div class="category-fill" [style.width.%]="getCategoryPercentage(category.value)"></div>
@@ -73,7 +73,7 @@
             <div class="month-bar">
               <div class="month-fill" [style.width.%]="getMonthPercentage(month.value)"></div>
             </div>
-            <span class="month-amount">Rs. {{ month.value | number:'1.2-2' }}</span>
+            <span class="month-amount">Rs. {{ month.value }}</span>
           </div>
         </div>
       </div>
@@ -97,7 +97,7 @@
           <p class="expense-category">{{ expense.category }}</p>
           <p class="expense-date">{{ expense.date | date }}</p>
         </div>
-        <p class="expense-amount">Rs. {{ expense.amount | number:'1.2-2' }}</p>
+        <p class="expense-amount">Rs. {{ expense.amount }}</p>
       </div>
     </div>
   </div>
