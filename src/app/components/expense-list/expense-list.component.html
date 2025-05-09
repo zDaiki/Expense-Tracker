@@ -20,7 +20,7 @@
     </div>
     
     <div class="add-expense">
-      <a routerLink="/expenses/new" class="btn-add">Add New Expense</a>
+      <button class="btn-add" (click)="addNewExpense()">Add New Expense</button>
     </div>
   </div>
   
@@ -46,9 +46,9 @@
           <td>{{ expense.category }}</td>
           <td>Rs. {{ expense.amount }}</td>
           <td class="actions">
-            <a [routerLink]="['/expenses', expense.id]" class="btn-view">View</a>
-            <a [routerLink]="['/expenses', expense.id, 'edit']" class="btn-edit">Edit</a>
-            <button (click)="deleteExpense(expense.id)" class="btn-delete">Delete</button>
+            <button class="btn-view" (click)="viewExpense(expense)">View</button>
+            <button class="btn-edit" (click)="editExpense(expense)">Edit</button>
+            <button class="btn-delete" (click)="deleteExpense(expense)">Delete</button>
           </td>
         </tr>
       </tbody>

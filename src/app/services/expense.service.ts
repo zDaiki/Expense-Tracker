@@ -154,9 +154,9 @@ export class ExpenseService {
       : 1;
   }
   
-  // Predefined categories
+  //categories
   private readonly DEFAULT_CATEGORIES = [
-    'Food & Dining',
+    'Food',
     'Shopping',
     'Housing',
     'Transportation',
@@ -170,13 +170,11 @@ export class ExpenseService {
     'Other'
   ];
   
-  // Get all available categories (both predefined and user-created)
   getAllCategories(): string[] {
-    // Combine predefined categories with user-created ones
+
     const userCategories = this.getExpenseCategories();
     const allCategories = [...this.DEFAULT_CATEGORIES];
     
-    // Add any user categories that aren't in the default list
     userCategories.forEach(category => {
       if (!allCategories.includes(category)) {
         allCategories.push(category);

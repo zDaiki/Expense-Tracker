@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ExpenseService } from '../../services/expense.service';
+import { ModalService } from '../../services/modal.service';
 import { Expense } from '../../models/expense.model';
 import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -9,7 +10,7 @@ import { RouterLink } from '@angular/router';
   templateUrl: './expense-list.component.html',
   styleUrls: ['./expense-list.component.scss'],
   standalone: true,
-  imports: [NgIf, NgFor, RouterLink, DatePipe]
+  imports: [NgIf, NgFor, DatePipe]
 })
 export class ExpenseListComponent implements OnInit {
   expenses: Expense[] = [];
@@ -26,10 +27,13 @@ export class ExpenseListComponent implements OnInit {
   pageSize: number = 10;
   totalPages: number = 1;
 
-  constructor(private expenseService: ExpenseService) { }
+  constructor(
+    private expenseService: ExpenseService,
+    private modalService: ModalService
+  ) { }
 
   ngOnInit(): void {
-    this.categories = this.expenseService.getExpenseCategories();
+    this.categories = this.expenseService.getAllCategories();
     this.expenseService.getExpenses().subscribe(expenses => {
       this.expenses = expenses;
       this.applyFilters();
@@ -70,10 +74,32 @@ export class ExpenseListComponent implements OnInit {
     this.applyFilters();
   }
 
-  deleteExpense(id: number): void {
-    if (confirm('Are you sure you want to delete this expense?')) {
-      this.expenseService.deleteExpense(id);
-    }
+  addNewExpense(): void {
+    this.modalService.openAddExpenseModal().subscribe(result => {
+      if (result && result.action === 'add' && result.expense) {
+        this.expenseService.addExpense(result.expense);
+      }
+    });
+  }
+
+  viewExpense(expense: Expense): void {
+    this.modalService.openViewExpenseModal(expense).subscribe();
+  }
+
+  editExpense(expense: Expense): void {
+    this.modalService.openEditExpenseModal(expense).subscribe(result => {
+      if (result && result.action === 'edit' && result.expense) {
+        this.expenseService.updateExpense(result.expense);
+      }
+    });
+  }
+
+  deleteExpense(expense: Expense): void {
+    this.modalService.openDeleteExpenseModal(expense).subscribe(result => {
+      if (result && result.action === 'delete' && result.id) {
+        this.expenseService.deleteExpense(result.id);
+      }
+    });
   }
   
   goToPage(page: number): void {

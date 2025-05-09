@@ -1,0 +1,115 @@
+<div class="expense-modal">
+  <div class="modal-header">
+    <h2>{{ title }}</h2>
+    <button mat-icon-button (click)="dialogRef.close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div class="modal-content">
+    <ng-container *ngIf="mode === 'delete'">
+      <div class="delete-confirmation">
+        <mat-icon class="warning-icon">warning</mat-icon>
+        <p>Are you sure you want to delete this expense?</p>
+        <!-- <div class="expense-summary">
+          <p><strong>Description:</strong> {{ data.expense?.description }}</p>
+          <p><strong>Amount:</strong> Rs. {{ data.expense?.amount }}</p>
+          <p><strong>Date:</strong> {{ data.expense?.date | date }}</p>
+        </div> -->
+        <p class="warning-text">This action cannot be undone.</p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="mode === 'view'">
+       <div class="expense-summary">
+          <p><strong>Description:</strong> {{ data.expense?.description }}</p>
+          <p><strong>Category:</strong>{{ data.expense?.category }}</p>
+          <p><strong>Amount:</strong> Rs. {{ data.expense?.amount }}</p>
+          <p><strong>Date:</strong> {{ data.expense?.date | date }}</p>
+        </div>
+    </ng-container>
+
+    <form *ngIf="mode === 'edit' || mode === 'add'" [formGroup]="expenseForm" (ngSubmit)="onSubmit()">
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput formControlName="description" placeholder="Enter expense description">
+          <mat-error *ngIf="expenseForm.get('description')?.hasError('required')">
+            Description is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Amount</mat-label>
+          <input matInput type="number" formControlName="amount" placeholder="Enter amount">
+          <!-- <span matPrefix> Rs.&nbsp;</span> -->
+          <mat-error *ngIf="expenseForm.get('amount')?.hasError('required')">
+            Amount is required
+          </mat-error>
+          <mat-error *ngIf="expenseForm.get('amount')?.hasError('min')">
+            Amount must be greater than 10
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Date</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="expenseForm.get('date')?.hasError('required')">
+            Date is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Category</mat-label>
+          <mat-select formControlName="category">
+            <mat-option *ngFor="let category of data.categories" [value]="category">
+              {{ category }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="expenseForm.get('category')?.hasError('required')">
+            Category is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="form-row" *ngIf="expenseForm.get('category')?.value === 'Other'">
+        <mat-form-field appearance="outline">
+          <mat-label>Custom Category</mat-label>
+          <input 
+            matInput 
+            formControlName="customCategory" 
+            placeholder="Enter a custom category"
+          >
+          <mat-error *ngIf="expenseForm.get('customCategory')?.hasError('required')">
+            Custom category is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+
+    </form>
+  </div>
+
+  <div class="modal-actions">
+    <button mat-button (click)="onCancel()">
+      {{ mode === 'view' ? 'Close' : 'Cancel' }}
+    </button>
+    
+    <button 
+      *ngIf="mode !== 'view'" 
+      mat-raised-button 
+      color="{{ mode === 'delete' ? 'warn' : 'primary' }}" 
+      (click)="onSubmit()"
+      [disabled]="mode !== 'delete' && expenseForm.invalid"
+    >
+      {{ submitButtonText }}
+    </button>
+  </div>
+</div>
