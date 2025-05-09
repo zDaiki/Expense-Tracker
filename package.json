@@ -23,7 +23,7 @@
     "@angular/platform-server": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@angular/ssr": "^19.2.9",
-    "@netlify/angular-runtime": "^2.2.0",
+    "@netlify/angular-runtime": "^2.3.1",
     "@rinminase/ng-charts": "^4.3.0",
     "@types/chart.js": "^2.9.41",
     "chart.js": "^4.4.9",
